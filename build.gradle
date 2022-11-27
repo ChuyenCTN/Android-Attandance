@@ -1,4 +1,30 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext{
+        kotlin_version = '1.6.10'
+        glide_version = '4.12.0'
+        retrofit_version = '2.9.0'
+        coroutines_version = '1.6.0-RC'
+        okhttp_version = '5.0.0-alpha.2'
+
+        koin_version= "3.2.2"
+        koin_android_version= '3.3.0'
+        koin_android_compose_version= "3.2.2"
+        koin_ktor= "3.2.2"
+        navigation_version = '2.5.0-alpha03'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "io.insert-koin:koin-gradle-plugin:2.2.3"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_version"
+    }
+}
+
 plugins {
     id 'com.android.application' version '7.2.2' apply false
     id 'com.android.library' version '7.2.2' apply false
