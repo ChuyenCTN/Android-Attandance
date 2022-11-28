@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Attandance" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Attandance" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -13,7 +13,16 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="progressBarBlue" parent="@style/Theme.AppCompat">
         <item name="colorAccent">@color/colorAppTheme</item>
+    </style>
+
+    <style name="Mybutton">
+        <item name="shapeAppearanceOverlay">@color/white</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:textColor">?attr/colorError</item>
+        <item name="strokeColor">?attr/colorError</item>
     </style>
 </resources>
