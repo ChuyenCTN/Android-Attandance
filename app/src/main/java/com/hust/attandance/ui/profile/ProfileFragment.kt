@@ -1,4 +1,4 @@
-package com.hust.attandance.ui.notifications
+package com.hust.attandance.ui.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,23 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hust.attandance.databinding.FragmentNotificationsBinding
+import com.hust.attandance.ui.home.HomeFragment
 
-class NotificationsFragment : Fragment() {
+class ProfileFragment : Fragment() {
+
+    companion object {
+        @JvmStatic
+        fun newInstance(
+        ) =
+            ProfileFragment().apply {
+//                arguments = bundleOf(
+//                    ARG_BRANCH_IDS to branchIds.toLongArray(),
+//                )
+            }
+
+        const val ARG_BRANCH_IDS = "arg_branch_ids"
+    }
+
 
     private var _binding: FragmentNotificationsBinding? = null
 
@@ -17,19 +32,21 @@ class NotificationsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
+        val profileViewModel =
+            ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
+        profileViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root

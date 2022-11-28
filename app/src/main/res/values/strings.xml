@@ -3,6 +3,23 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-
+    <string name="error_unidentified">Lỗi không xác định</string>
     <string name="msg_no_internet">Không có kết nối Internet</string>
+    <string name="label_time_recent">Vừa xong</string>
+    <string name="label_time_minutes_ago">%d phút trước</string>
+    <string name="label_time_hours_ago">%d giờ trước</string>
+    <string name="label_time_days_ago">%d ngày trước</string>
+    <string name="label_time_week_ago">%d tuần trước</string>
+    <string name="error">Lỗi</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="dialog_general_error_title">Lỗi của chúng tôi</string>
+    <string name="dialog_general_error_message">Rất tiếc khi khiến bạn gặp phải lỗi này. Hãy thử lại trong vài phút.</string>
+    <string name="dialog_general_error_retry">Thử lại</string>
+    <string name="dialog_general_error_detail">Xem chi tiết</string>
+    <string name="msg_session_expire">"Phiên làm việc đã hết hạn. Vui lòng đăng nhập lại."</string>
+    <string name="label_ok_popup">Đồng ý</string>
+    <string name="label_no_popup">Không</string>
+    <string name="confirm_cancel">Hủy bỏ</string>
+    <string name="label_processing_content">Đang xử lý</string>
+    <string name="title_splash">Splash</string>
 </resources>
