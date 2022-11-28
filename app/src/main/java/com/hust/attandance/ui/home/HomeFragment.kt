@@ -9,13 +9,26 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hust.attandance.databinding.FragmentHomeBinding
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment() { // class danh sach lop
 
     private var _binding: FragmentHomeBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+
+    companion object {
+        @JvmStatic
+        fun newInstance(
+        ) =
+            HomeFragment().apply {
+//                arguments = bundleOf(
+//                    ARG_BRANCH_IDS to branchIds.toLongArray(),
+//                )
+            }
+
+        const val ARG_BRANCH_IDS = "arg_branch_ids"
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,

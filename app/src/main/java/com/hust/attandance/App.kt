@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.multidex.MultiDexApplication
 import com.hust.attandance.di.cacheModule
+import com.hust.attandance.di.exceptionModule
 import com.hust.attandance.di.networkModule
 import com.hust.attandance.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -72,7 +73,8 @@ class App : MultiDexApplication(), Application.ActivityLifecycleCallbacks {
             modules(
                 networkModule,
                 cacheModule,
-                viewModelModule,
+                exceptionModule,
+                viewModelModule
             )
         }
     }

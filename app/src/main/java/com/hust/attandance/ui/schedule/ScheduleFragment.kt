@@ -1,4 +1,4 @@
-package com.hust.attandance.ui.dashboard
+package com.hust.attandance.ui.schedule
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,22 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hust.attandance.databinding.FragmentDashboardBinding
+import com.hust.attandance.ui.home.HomeFragment
 
-class DashboardFragment : Fragment() {
+class ScheduleFragment : Fragment() {
+
+    companion object {
+        @JvmStatic
+        fun newInstance(
+        ) =
+            ScheduleFragment().apply {
+//                arguments = bundleOf(
+//                    ARG_BRANCH_IDS to branchIds.toLongArray(),
+//                )
+            }
+
+        const val ARG_BRANCH_IDS = "arg_branch_ids"
+    }
 
     private var _binding: FragmentDashboardBinding? = null
 
@@ -22,14 +36,14 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+        val scheduleViewModel =
+            ViewModelProvider(this).get(ScheduleViewModel::class.java)
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
+        scheduleViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root
