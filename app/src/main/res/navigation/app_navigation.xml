@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/welcome">
+    app:startDestination="@id/splash">
 
     <fragment
         android:id="@+id/welcome"
@@ -25,6 +25,20 @@
         android:name="com.hust.attandance.ui.login.LoginFragment"
         android:label="login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/splash"
+        android:name="com.hust.attandance.ui.splash.SplashFragment"
+        android:label="login"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_to_welcom"
+            app:destination="@+id/welcome"
+            app:enterAnim="@anim/default_enter_anim"
+            app:exitAnim="@anim/default_exit_anim"
+            app:popEnterAnim="@anim/default_pop_enter_anim"
+            app:popExitAnim="@anim/default_pop_exit_anim"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <include app:graph="@navigation/main_navigation" />
 
@@ -38,5 +52,15 @@
         app:popExitAnim="@anim/default_pop_exit_anim"
         app:popUpTo="@+id/app_navigation"
         app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_back_login"
+        app:destination="@+id/login"
+        app:enterAnim="@anim/default_enter_anim"
+        app:exitAnim="@anim/default_exit_anim"
+        app:launchSingleTop="true"
+        app:popEnterAnim="@anim/default_pop_enter_anim"
+        app:popExitAnim="@anim/default_pop_exit_anim"
+        app:popUpTo="@+id/app_navigation" />
 
 </navigation>

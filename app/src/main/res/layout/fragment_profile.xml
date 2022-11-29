@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F6F8"
+    tools:context=".ui.profile.ProfileFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lProfileInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgLauncher"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:gravity="center"
+            android:text="Thông tin tài khoản"
+            android:textColor="@color/reply_black_800"
+            android:textSize="@dimen/sp_20"
+            app:layout_constraintBottom_toBottomOf="@+id/imgLauncher"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imgLauncher" />
+
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="@dimen/dp_120"
+            android:layout_marginTop="@dimen/dp_60"
+            android:background="@drawable/bg_circle_image"
+            android:scaleType="centerCrop"
+            android:src="@drawable/easter_bunny"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
+            android:fontFamily="@font/quicksand_bold"
+            android:gravity="center_horizontal"
+            android:textColor="@color/reply_black_800"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintTop_toBottomOf="@+id/imgAvatar"
+            tools:text="Nguyen Chuyen" />
+
+        <TextView
+            android:id="@+id/tvCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_4"
+            android:fontFamily="@font/quicksand_bold"
+            android:gravity="center_horizontal"
+            android:textColor="@color/reply_black_800"
+            android:textSize="@dimen/sp_15"
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            tools:text="20210750P" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_16"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="center_horizontal"
+            android:textColor="@color/reply_black_800"
+            android:textSize="@dimen/sp_15"
+            app:layout_constraintTop_toBottomOf="@+id/tvCode"
+            tools:text="Ha Noi, Ha Noi, Ha Noi, Ha Noi" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_40"
+        android:background="@drawable/bg_block"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_semibold"
+        android:foreground="?attr/selectableItemBackground"
+        android:paddingHorizontal="@dimen/dp_16"
+        android:paddingVertical="@dimen/dp_14"
+        android:text="Chỉnh sửa"
+        android:textColor="@color/reply_black_800"
+        app:layout_constraintTop_toBottomOf="@+id/lProfileInfo" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnForgotPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:background="@drawable/bg_block"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_semibold"
+        android:foreground="?attr/selectableItemBackground"
+        android:paddingHorizontal="@dimen/dp_16"
+        android:paddingVertical="@dimen/dp_14"
+        android:text="Quên mật khẩu?"
+        android:textColor="@color/reply_black_800"
+        app:layout_constraintTop_toBottomOf="@+id/btnEdit" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:background="@drawable/bg_block"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_semibold"
+        android:foreground="?attr/selectableItemBackground"
+        android:paddingHorizontal="@dimen/dp_16"
+        android:paddingVertical="@dimen/dp_14"
+        android:text="Đăng xuất"
+        android:textColor="@color/reply_black_800"
+        app:layout_constraintTop_toBottomOf="@+id/btnForgotPass" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

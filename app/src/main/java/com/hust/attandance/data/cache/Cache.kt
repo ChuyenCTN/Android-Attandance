@@ -424,35 +424,11 @@ class Cache(private val cacheSource: CacheSource) {
 //    fun setShowcaseEcommerceShown() =
 //        cacheSource.putBoolean(SHOWCASE_ECOMMERCE_SHOWN, true)
 //
-//    fun clearCache() {
-//        cacheSource.remove(KV_BEARER)
-//        cacheSource.remove(KV_JWT)
-//        cacheSource.remove(KV_BRANCH_ID)
-//        cacheSource.remove(KV_FB_TOKEN)
-//        cacheSource.remove(FIREBASE_DEVICE_TOKEN)
-//        cacheSource.remove(OMNI_ORDER_DELIVERY_TYPE)
-//        cacheSource.remove(OMNI_ORDER_PROCESS_FILTER)
-//        cacheSource.remove(KV_PAYMENT_METHOD)
-//        cacheSource.remove(KV_REGISTER_BEARER)
-//        cacheSource.remove(KV_MOBILE_API)
-//        cacheSource.remove(KV_FREE_PREMIUM)
-//        cacheSource.remove(OMNI_ORDER_RETURN_FILTER)
-//        /*cacheSource.remove(KV_CASH_FLOW_DATE_FILTER)
-//        cacheSource.remove(KV_CASH_FLOW_DATE_FILTER_OPTIONAL_START_DATE)
-//        cacheSource.remove(KV_CASH_FLOW_DATE_FILTER_OPTIONAL_END_DATE)*/
-//        cacheSource.remove(KV_PRINT_PREVIEW)
-//        cacheSource.remove(KV_SELL_OUT_OF_STOCK)
-//        cacheSource.remove(KV_ORDER_OUT_OF_STOCK)
-//        cacheSource.remove(KV_CURRENT_REATAIL)
-//        cacheSource.remove(KV_GET_KEY_SETTINGS)
-//        cacheSource.remove(KV_PRINT_WHEN_CREATE_INVOICE)
-//        cacheSource.remove(KV_PRINTER_ENABLE)
-//        cacheSource.remove(KV_GET_CURRENT_INDUSTRY)
-//        cacheSource.remove(KV_CURRENT_USER)
-//        cacheSource.remove(KSHIP_SETTING)
-//        cacheSource.remove(USER_ONBOARDING_CONFIG)
-//    }
-//
+    fun clearCache() {
+        cacheSource.remove(LOGIN_RESPONSE)
+    }
+
+    //
 //    fun getExtendDeliveryCod() = cacheSource.getInt(EXTEND_DELIVERY_COD_INVOICE, 0)
 //
 //    fun setPrintWhenCreateInvoice(isPrintCreateInvoice: Boolean) =
@@ -610,7 +586,7 @@ class Cache(private val cacheSource: CacheSource) {
     fun saveLoginResponse(response: LoginResonse) =
         cacheSource.putString(LOGIN_RESPONSE, Gson().toJson(response))
 
-    fun getUserOnboardingConfig(): LoginResonse? {
+    fun getProfileConfig(): LoginResonse? {
         val data = cacheSource.getString(LOGIN_RESPONSE, "")
         if (data.isEmpty()) {
             return null

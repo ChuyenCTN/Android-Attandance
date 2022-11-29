@@ -122,6 +122,9 @@
     <color name="status_success">#1A0DAC50</color>
 
     <color name="primary">#79dd9e</color>
+    <color name="primary_light">#acffcf</color>
     <color name="primary_dark">#00868d</color>
     <color name="primary_text_dark">#005960</color>
+    <color name="bg_error">#d32f2f</color>
+    <color name="bg_success">#46ab6f</color>
 </resources>

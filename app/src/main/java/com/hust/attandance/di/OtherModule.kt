@@ -11,5 +11,7 @@ val otherModule = module {
         GsonParser(get() as Gson)
     }
 
+    single { Gson() }
+
 
 }

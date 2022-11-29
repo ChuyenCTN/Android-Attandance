@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:elevation="0dp">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/tb_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentInsetStartWithNavigation="0dp"
+        app:elevation="0dp"
+        app:expandedTitleMarginStart="0dp"
+        tools:title="General Toolbar">
+
+        <ImageView
+            android:id="@+id/tbAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/keyline_4"
+            android:src="@drawable/ic_toolbar_circle_plus"
+            android:visibility="gone"
+            tools:visibility="gone" />
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <TextView
+        android:id="@+id/tv_no_internetHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorError"
+        android:gravity="center"
+        android:paddingBottom="@dimen/keyline_0"
+        android:text="@string/msg_no_internet"
+        android:textColor="?attr/colorOnError"
+        android:visibility="gone" />
+
+</com.google.android.material.appbar.AppBarLayout>

@@ -237,6 +237,23 @@ fun ImageView.showImage(
         }
 }
 
+fun ImageView.showImageAvatarProfile(
+    url: Any?,
+    placeholderId: Int = R.drawable.easter_bunny,
+    errorId: Int = R.drawable.easter_bunny,
+    vararg transforms: Transformation<Bitmap> = arrayOf(CenterCrop())
+) {
+    Glide.with(context).clear(this)
+    RequestOptions()
+        .transform(*transforms)
+        .placeholder(placeholderId)
+        .error(errorId)
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .priority(Priority.HIGH).let { options ->
+            Glide.with(this.context).load(url).apply(options).into(this)
+        }
+}
+
 /**
  * Load image dạng thumb lên view như ảnh product, image trong một danh sách...
  */

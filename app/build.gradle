@@ -19,7 +19,7 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BASE_DOMAIN_URL", '"https://api.nextfarm.vn"')
+        buildConfigField("String", "BASE_DOMAIN_URL", '"https://project-for-ai.herokuapp.com"')
     }
 
     buildTypes {
@@ -101,4 +101,30 @@ dependencies {
     // timber log
     implementation 'com.jakewharton.timber:timber:5.0.1'
     implementation 'javax.inject:javax.inject:1'
+    implementation 'com.google.code.gson:gson:2.10'
+
+    // flipper
+    def flipperVer = "0.154.0"
+    implementation "com.facebook.flipper:flipper:$flipperVer"
+    implementation 'com.facebook.soloader:soloader:0.10.4'
+    implementation "com.facebook.flipper:flipper-network-plugin:$flipperVer"
+    implementation 'com.kgurgul.flipper:flipper-realm-android:2.1.0'
+
+    debugImplementation "com.github.chuckerteam.chucker:library:3.5.2"
+    releaseImplementation "com.github.chuckerteam.chucker:library:3.5.2"
+
+    //ML Kit (To detect faces)
+    implementation 'com.google.mlkit:face-detection:16.1.5'
+    implementation 'com.google.android.gms:play-services-mlkit-face-detection:17.0.1'
+
+    // CameraX View class (For camera preview)
+    implementation "androidx.camera:camera-core:1.2.0-alpha04"
+    implementation "androidx.camera:camera-camera2:1.2.0-alpha04"
+    implementation "androidx.camera:camera-lifecycle:1.2.0-alpha04"
+    implementation "androidx.camera:camera-view:1.2.0-alpha04"
+
+    //TensorFlow Lite libraries (To recognize faces)
+    implementation 'org.tensorflow:tensorflow-lite-task-vision:0.3.0'
+    implementation 'org.tensorflow:tensorflow-lite-support:0.3.0'
+    implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly-SNAPSHOT'
 }

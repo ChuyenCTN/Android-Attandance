@@ -7,10 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.multidex.MultiDexApplication
-import com.hust.attandance.di.cacheModule
-import com.hust.attandance.di.exceptionModule
-import com.hust.attandance.di.networkModule
-import com.hust.attandance.di.viewModelModule
+import com.hust.attandance.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -74,7 +71,10 @@ class App : MultiDexApplication(), Application.ActivityLifecycleCallbacks {
                 networkModule,
                 cacheModule,
                 exceptionModule,
-                viewModelModule
+                viewModelModule,
+                repoModule,
+                interactModule,
+                otherModule
             )
         }
     }

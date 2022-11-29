@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Attandance</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Lớp học</string>
+    <string name="title_dashboard">Lịch học</string>
+    <string name="title_notifications">Thông tin</string>
     <string name="error_unidentified">Lỗi không xác định</string>
     <string name="msg_no_internet">Không có kết nối Internet</string>
     <string name="label_time_recent">Vừa xong</string>
@@ -22,4 +22,6 @@
     <string name="confirm_cancel">Hủy bỏ</string>
     <string name="label_processing_content">Đang xử lý</string>
     <string name="title_splash">Splash</string>
+    <string name="error_unknow">Có lỗi xảy ra. Vui lòng thử lại.</string>
+    <string name="error_common_error_title">Thông báo</string>
 </resources>

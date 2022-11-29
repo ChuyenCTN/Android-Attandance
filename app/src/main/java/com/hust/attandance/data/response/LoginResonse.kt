@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName
 
 data class LoginResonse(
     @SerializedName("address")
-    val address: String,
+    val address: String?,
     @SerializedName("birthday")
-    val birthday: String,
+    val birthday: String?,
     @SerializedName("faceId")
-    val faceId: String,
+    val faceId: String?,
     @SerializedName("image")
-    val image: String,
+    val image: String?,
     @SerializedName("phone")
-    val phone: String,
+    val phone: String?,
     @SerializedName("studentId")
-    val studentId: Int,
+    val studentId: Int?,
     @SerializedName("userId")
-    val userId: Int,
+    val userId: Int?,
     @SerializedName("userName")
-    val userName: String
+    val userName: String?
 )

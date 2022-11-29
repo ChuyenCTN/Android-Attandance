@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/toolbar_general"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lInformation"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        tools:visibility="visible">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/imgStallInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
+            android:background="@drawable/bg_image_choose"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivPhoto"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_80"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/user" />
+
+            <ImageView
+                android:id="@+id/ivChangeImage"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+
+                app:layout_constraintEnd_toEndOf="@id/imgStallInfo"
+                app:layout_constraintTop_toTopOf="@id/imgStallInfo"
+                app:srcCompat="@drawable/ic_change_image" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lInputStall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
+            android:background="@drawable/bg_block"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/dp_16"
+            android:paddingVertical="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@+id/imgStallInfo">
+
+            <TextView
+                android:id="@+id/tvCustomerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Họ tên:"
+                android:textColor="@color/reply_black_800"
+                app:layout_constraintBottom_toBottomOf="@+id/etCustomerName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etCustomerName" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etCustomerName"
+                style="@style/TextFieldCustomer"
+                android:layout_marginStart="@dimen/keyline_4"
+                android:hint="Họ và tên"
+                android:inputType="textCapWords"
+                android:maxLength="255"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MSSV:"
+                android:textColor="@color/reply_black_800"
+                app:layout_constraintBottom_toBottomOf="@+id/etCode"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etCode" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etCode"
+                style="@style/TextFieldCustomer"
+                android:layout_marginStart="@dimen/keyline_4"
+                android:hint="Mã số sinh viên"
+                android:inputType="textCapWords"
+                android:maxLength="255"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier2"
+                app:layout_constraintTop_toBottomOf="@+id/etCustomerName" />
+
+            <TextView
+                android:id="@+id/tvClass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lớp:"
+                android:textColor="@color/reply_black_800"
+                app:layout_constraintBottom_toBottomOf="@+id/etClass"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etClass" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etClass"
+                style="@style/TextFieldCustomer"
+                android:layout_marginStart="@dimen/keyline_4"
+                android:hint="Lớp"
+                android:inputType="textCapWords"
+                android:maxLength="255"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier2"
+                app:layout_constraintTop_toBottomOf="@+id/etCode" />
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Địa chỉ:"
+                android:textColor="@color/reply_black_800"
+                app:layout_constraintBottom_toBottomOf="@+id/etAddress"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etAddress" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etAddress"
+                style="@style/TextFieldCustomer"
+                android:layout_marginStart="@dimen/keyline_4"
+                android:hint="Địa chỉ"
+                android:inputType="textCapWords"
+                android:maxLength="255"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier2"
+                app:layout_constraintTop_toBottomOf="@+id/etClass" />
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số điện thoại:"
+                android:textColor="@color/reply_black_800"
+                app:layout_constraintBottom_toBottomOf="@+id/etPhone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etPhone" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etPhone"
+                style="@style/TextFieldCustomer"
+                android:layout_marginStart="@dimen/keyline_4"
+                android:hint="Số điện thoại"
+                android:inputType="textCapWords"
+                android:maxLength="255"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier2"
+                app:layout_constraintTop_toBottomOf="@+id/etAddress" />
+
+            <TextView
+                android:id="@+id/tvBirthDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ngày sinh:"
+                android:textColor="@color/reply_black_800"
+                app:layout_constraintBottom_toBottomOf="@+id/etBirthDay"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etBirthDay" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etBirthDay"
+                style="@style/TextFieldCustomer"
+                android:layout_marginStart="@dimen/keyline_4"
+                android:hint="dd/MM/yyyy"
+                android:inputType="textCapWords"
+                android:maxLength="255"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier2"
+                app:layout_constraintTop_toBottomOf="@+id/etPhone" />
+
+            <TextView
+                android:id="@+id/tvRequireCustomerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_4"
+                android:text="*"
+                android:textColor="@color/red"
+                app:layout_constraintStart_toEndOf="@+id/tvCustomerName"
+                app:layout_constraintTop_toTopOf="@+id/tvCustomerName" />
+
+            <TextView
+                android:id="@+id/tvRequireCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_4"
+                android:text="*"
+                android:textColor="@color/red"
+                app:layout_constraintStart_toEndOf="@+id/tvCode"
+                app:layout_constraintTop_toTopOf="@+id/tvCode" />
+
+            <TextView
+                android:id="@+id/tvRequireClass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_4"
+                android:text="*"
+                android:textColor="@color/red"
+                app:layout_constraintStart_toEndOf="@+id/tvClass"
+                app:layout_constraintTop_toTopOf="@+id/tvClass" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="tvRequireCustomerName,tvRequireCode, tvPhone, tvBirthDay,tvAddress, tvRequireClass "
+                tools:layout_editor_absoluteX="92dp"
+                tools:layout_editor_absoluteY="8dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingHorizontal="@dimen/dp_16"
+            android:paddingBottom="@dimen/dp_20"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSave"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_12"
+                android:background="@drawable/bg_login"
+                android:text="Lưu"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

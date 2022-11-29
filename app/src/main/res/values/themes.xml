@@ -25,4 +25,19 @@
         <item name="android:textColor">?attr/colorError</item>
         <item name="strokeColor">?attr/colorError</item>
     </style>
+
+    <style name="TextFieldCustomer">
+        <item name="android:background">@drawable/bg_edittext</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:inputType">text</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:textAppearance">?attr/textAppearanceBodyMedium</item>
+        <item name="android:paddingTop">@dimen/keyline_2</item>
+        <item name="android:paddingBottom">@dimen/keyline_2</item>
+        <item name="android:layout_marginTop">@dimen/keyline_2</item>
+        <item name="android:layout_marginBottom">@dimen/keyline_2</item>
+
+    </style>
 </resources>

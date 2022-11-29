@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardBg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    android:elevation="@dimen/dp_100"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+    app:cardCornerRadius="@dimen/dp_5"
+    tools:backgroundTint="@color/primary_dark">
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:clickable="false"
+        android:drawablePadding="@dimen/keyline_2"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:fontFamily="@font/quicksand_semibold"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:paddingStart="@dimen/keyline_2"
+        android:paddingTop="@dimen/keyline_1"
+        android:paddingEnd="@dimen/keyline_2"
+        android:paddingBottom="@dimen/keyline_1"
+        android:textSize="@dimen/sp_14"
+        tools:drawableStartCompat="@drawable/ic_check_secondary"
+        tools:drawableTint="?attr/colorOnPrimary"
+        tools:text="Xác nhận giao đơn hàng qự aeij apeogo[pae ưgoawejg] oặeg thành công!"
+        tools:textColor="?attr/colorOnPrimary" />
+</androidx.cardview.widget.CardView>
