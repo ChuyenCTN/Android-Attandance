@@ -3,7 +3,7 @@ package com.hust.attandance.di
 import com.hust.attandance.ui.home.HomeViewModel
 import com.hust.attandance.ui.login.LoginViewModel
 import com.hust.attandance.ui.main.MainViewModel
-import com.hust.attandance.ui.splash.SplashViewModel
+import com.hust.attandance.ui.welcome.WelcomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -14,7 +14,7 @@ val viewModelModule: Module = module {
         HomeViewModel()
     }
     viewModel {
-        SplashViewModel(get())
+        WelcomeViewModel(get())
     }
     viewModel {
         LoginViewModel(get())

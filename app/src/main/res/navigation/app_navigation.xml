@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/splash">
+    app:startDestination="@id/welcome">
 
     <fragment
-        android:id="@+id/splash"
-        android:name="com.hust.attandance.ui.splash.SplashFragment"
+        android:id="@+id/welcome"
+        android:name="com.hust.attandance.ui.welcome.WelcomeFragment"
         android:label="@string/title_splash"
-        tools:layout="@layout/fragment_splash">
+        tools:layout="@layout/fragment_welcome">
         <action
             android:id="@+id/action_to_login"
             app:destination="@+id/login"
