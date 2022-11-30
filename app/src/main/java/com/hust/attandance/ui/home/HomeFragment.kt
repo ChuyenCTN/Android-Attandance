@@ -1,52 +1,38 @@
 package com.hust.attandance.ui.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.hust.attandance.databinding.FragmentHomeBinding
+import com.hust.attandance.ui.common.BaseViewBindingFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() { // class danh sach lop
+class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding, HomeViewModel>(
+    FragmentHomeBinding::inflate
+) {
+    override val viewModel by viewModel<HomeViewModel>() // class danh sach lop
 
-    private var _binding: FragmentHomeBinding? = null
-
-    private val binding get() = _binding!!
-
+    private lateinit var classesAdapter: HomeClassesAdapter
 
     companion object {
         @JvmStatic
-        fun newInstance(
-        ) =
-            HomeFragment().apply {
-//                arguments = bundleOf(
-//                    ARG_BRANCH_IDS to branchIds.toLongArray(),
-//                )
+        fun newInstance() = HomeFragment().apply {
+
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        classesAdapter = HomeClassesAdapter {
+
+        }
+        viewBinding.apply {
+            rcvClass.apply {
+                adapter = classesAdapter
+                layoutManager = LinearLayoutManager(requireContext())
             }
-
-        const val ARG_BRANCH_IDS = "arg_branch_ids"
+        }
     }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-
-        return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

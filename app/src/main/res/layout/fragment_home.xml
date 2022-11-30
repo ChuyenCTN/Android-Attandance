@@ -4,7 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_background"
     tools:context=".ui.home.HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:fontFamily="@font/quicksand_bold"
+            android:gravity="center"
+            android:paddingVertical="@dimen/dp_14"
+            android:text="Danh sách lớp học"
+            android:textColor="@color/reply_black_800"
+            android:textSize="@dimen/sp_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeClass"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dp_16"
+            android:background="@drawable/bg_block"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvClass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_classes" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAdd"
@@ -14,8 +53,10 @@
         android:layout_marginHorizontal="@dimen/keyline_4"
         android:layout_marginVertical="@dimen/keyline_4"
         android:background="@drawable/bg_login"
+        android:visibility="gone"
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

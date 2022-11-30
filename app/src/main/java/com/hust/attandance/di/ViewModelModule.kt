@@ -13,7 +13,7 @@ import org.koin.dsl.module
 @JvmField
 val viewModelModule: Module = module {
     viewModel {
-        HomeViewModel()
+        HomeViewModel(get())
     }
     viewModel {
         WelcomeViewModel(get(), get())
