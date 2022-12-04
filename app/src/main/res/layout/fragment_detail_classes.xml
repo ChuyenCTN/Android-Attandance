@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background">
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_16"
+        android:clickable="true"
+        android:padding="@dimen/dp_8"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgAvatarClass"
+        android:layout_width="@dimen/dp_90"
+        android:layout_height="@dimen/dp_90"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_16"
+        android:src="@drawable/class_detail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnBack" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:ellipsize="end"
+        android:fontFamily="@font/quicksand_bold"
+        android:maxLines="2"
+        android:textColor="@color/reply_black_800"
+        android:textSize="@dimen/sp_22"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgAvatarClass"
+        app:layout_constraintTop_toTopOf="@+id/imgAvatarClass"
+        tools:text="Mobile Team" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:ellipsize="end"
+        android:fontFamily="@font/quicksand_semibold"
+        android:maxLines="2"
+        android:textColor="@color/reply_black_800"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgAvatarClass"
+        app:layout_constraintTop_toBottomOf="@+id/tvName"
+        tools:text="Mobile Team" />
+
+    <TextView
+        android:id="@+id/tvMainTeacher"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:ellipsize="end"
+        android:fontFamily="@font/quicksand_semibold"
+        android:maxLines="2"
+        android:textColor="@color/reply_black_800"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgAvatarClass"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescription"
+        tools:text="Giáo viên: Nguyễn Văn A" />
+
+    <TextView
+        android:id="@+id/tvNumberStudent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:ellipsize="end"
+        android:fontFamily="@font/quicksand_semibold"
+        android:maxLines="2"
+        android:textColor="@color/reply_black_800"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgAvatarClass"
+        app:layout_constraintTop_toBottomOf="@+id/tvMainTeacher"
+        tools:text="Sĩ số: 40" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_16"
+        android:background="@drawable/bg_block"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumberStudent">
+
+        <com.hust.attandance.ui.common.customviews.CustomBadgeTabLayout
+            android:id="@+id/tabClass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabIndicatorHeight="1dp"
+            app:tabMode="scrollable" />
+
+        <View
+            android:id="@+id/lineTab"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@drawable/bg_tab_layout"
+            app:layout_constraintTop_toBottomOf="@+id/tabClass" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pagerClass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/lineTab" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/btnAttandance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:background="@drawable/bg_button"
+        android:fontFamily="@font/quicksand_bold"
+        android:paddingHorizontal="@dimen/dp_12"
+        android:paddingVertical="@dimen/dp_8"
+        android:text="Điểm danh"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

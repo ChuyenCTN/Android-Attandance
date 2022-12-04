@@ -1,5 +1,7 @@
 package com.hust.attandance.di
 
+import com.hust.attandance.ui.attandance.FaceAttandanceViewModel
+import com.hust.attandance.ui.classes.DetailClassesViewModel
 import com.hust.attandance.ui.home.HomeViewModel
 import com.hust.attandance.ui.login.LoginViewModel
 import com.hust.attandance.ui.main.MainViewModel
@@ -13,7 +15,7 @@ import org.koin.dsl.module
 @JvmField
 val viewModelModule: Module = module {
     viewModel {
-        HomeViewModel()
+        HomeViewModel(get())
     }
     viewModel {
         WelcomeViewModel(get(), get())
@@ -29,5 +31,11 @@ val viewModelModule: Module = module {
     }
     viewModel {
         SplashViewModel(get(), get())
+    }
+    viewModel {
+        DetailClassesViewModel(get())
+    }
+    viewModel {
+        FaceAttandanceViewModel(get())
     }
 }

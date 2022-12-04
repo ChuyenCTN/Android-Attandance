@@ -24,6 +24,23 @@
         android:id="@+id/navigation_home"
         android:name="com.hust.attandance.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+
+
+    </fragment>
+    <action
+        android:id="@+id/action_to_class_detail"
+        app:destination="@+id/class_detail"
+        app:enterAnim="@anim/default_enter_anim"
+        app:exitAnim="@anim/default_exit_anim"
+        app:popEnterAnim="@anim/default_pop_enter_anim"
+        app:popExitAnim="@anim/default_pop_exit_anim"
+        app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/class_detail"
+        android:name="com.hust.attandance.ui.classes.DetailClassesFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_detail_classes" />
+
 
 </navigation>

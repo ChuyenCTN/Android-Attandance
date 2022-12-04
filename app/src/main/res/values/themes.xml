@@ -40,4 +40,16 @@
         <item name="android:layout_marginBottom">@dimen/keyline_2</item>
 
     </style>
+
+    <style name="TextAppearance.Body1" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/quicksand_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="lineHeight">19.6sp</item>
+    </style>
+
+    <style name="TextAppearance.Body2" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">@font/quicksand_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="lineHeight">19.8sp</item>
+    </style>
 </resources>

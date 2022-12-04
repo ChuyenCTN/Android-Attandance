@@ -395,9 +395,9 @@ fun NavController.safeNavigate(direction: NavDirections) {
     }
 }
 
-//fun NavController.safeNavigateUp() {
-//    currentDestination?.let {
-//        if (it.id != R.id.homeFragment)
-//            navigateUp()
-//    }
-//}
+fun NavController.safeNavigateUp() {
+    currentDestination?.let {
+        if (it.id != R.id.mainFragment)
+            navigateUp()
+    }
+}

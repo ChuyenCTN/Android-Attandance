@@ -68,8 +68,8 @@
     <color name="color_showcase_dialog_color">#99000000</color>
     <color name="color_showcase_content_background_color">#038fdc</color>
     <color name="color_showcase_action_text">#3f3f3f</color>
-    <color name="color_background_freshchat">#F5F6F8 </color>
-    <color name="color_background_bubble_left">#B6E6CB </color>
+    <color name="color_background_freshchat">#F5F6F8</color>
+    <color name="color_background_bubble_left">#B6E6CB</color>
     <color name="mine_shaf">#202020</color>
     <color name="freshchat_contact_us_btn_bg_normal">#41AC49</color>
     <color name="freshchat_contact_us_btn_bg_pressed">#007c1b</color>
@@ -127,4 +127,8 @@
     <color name="primary_text_dark">#005960</color>
     <color name="bg_error">#d32f2f</color>
     <color name="bg_success">#46ab6f</color>
+    <color name="color_background">#f4f4f6</color>
+    <color name="cl_text_add">#0090DA</color>
+    <color name="cl_text_minus">#FF3650</color>
+    <color name="cl_text_normal">#1F2021</color>
 </resources>

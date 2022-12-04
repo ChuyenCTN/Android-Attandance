@@ -53,6 +53,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     implementation 'androidx.window:window:1.0.0'
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.2'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
@@ -127,4 +128,6 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-lite-task-vision:0.3.0'
     implementation 'org.tensorflow:tensorflow-lite-support:0.3.0'
     implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly-SNAPSHOT'
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 }

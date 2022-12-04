@@ -2,12 +2,10 @@ package com.hust.attandance.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.hust.attandance.ui.common.BaseViewModel
+import com.hust.attandance.utils.exceptions.ExceptionHandler
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(exceptionHandler: ExceptionHandler) :
+    BaseViewModel(exceptionHandler) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-    val text: LiveData<String> = _text
 }
