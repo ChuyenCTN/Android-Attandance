@@ -62,8 +62,6 @@ class FaceAttandanceFragment :
         java.util.HashMap<String, SimilarityClassifier.Recognition>() //saved Faces
 
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -116,19 +114,19 @@ class FaceAttandanceFragment :
 
             //Process acquired image to detect faces
             val result: Task<List<Face>> =
-                detector.process(image)
-                    .addOnSuccessListener(
+                detector?.process(image)
+                    ?.addOnSuccessListener(
                         OnSuccessListener<List<Face>> { faces ->
                             if (faces.size != 0) {
                                 val face = faces[0] //Get first face from detected faces
                                 //                                                    System.out.println(face);
 
                                 //mediaImage to Bitmap
-                                val frame_bmp: Bitmap = toBitmap(mediaImage)
+                                val frame_bmp = toBitmap(mediaImage)
                                 val rot = imageProxy.imageInfo.rotationDegrees
 
                                 //Adjust orientation of Face
-                                val frame_bmp1: Bitmap =
+                                val frame_bmp1 =
                                     rotateBitmap(
                                         frame_bmp,
                                         rot,
@@ -141,20 +139,20 @@ class FaceAttandanceFragment :
                                 val boundingBox = RectF(face.boundingBox)
 
                                 //Crop out bounding box from whole Bitmap(image)
-                                var cropped_face: Bitmap =
+                                var cropped_face =
                                     getCropBitmapByCPU(
                                         frame_bmp1,
                                         boundingBox
                                     )
                                 if (flipX) cropped_face =
-                                    com.atharvakale.facerecognition.MainActivity.rotateBitmap(
+                                    rotateBitmap(
                                         cropped_face,
                                         0,
                                         flipX,
                                         false
                                     )
                                 //Scale the acquired Face to 112*112 which is required input for model
-                                val scaled: Bitmap = getResizedBitmap(cropped_face, 112, 112)
+                                val scaled = getResizedBitmap(cropped_face, 112, 112)
                                 if (start) recognizeImage(scaled) //Send scaled bitmap to create face embeddings.
                                 //                                                    System.out.println(boundingBox);
                             } else {
@@ -206,7 +204,7 @@ class FaceAttandanceFragment :
 
 
     private fun rotateBitmap(
-        bitmap: Bitmap, rotationDegrees: Int, flipX: Boolean, flipY: Boolean
+        bitmap: Bitmap?, rotationDegrees: Int, flipX: Boolean, flipY: Boolean
     ): Bitmap? {
         val matrix = Matrix()
 
@@ -215,14 +213,15 @@ class FaceAttandanceFragment :
 
         // Mirror the image along the X or Y axis.
         matrix.postScale(if (flipX) -1.0f else 1.0f, if (flipY) -1.0f else 1.0f)
-        val rotatedBitmap =
-            Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-
-        // Recycle the old bitmap if it has changed.
-        if (rotatedBitmap != bitmap) {
-            bitmap.recycle()
+        return bitmap?.let {
+            val rotatedBitmap =
+                Bitmap.createBitmap(it, 0, 0, it.width, it.height, matrix, true)
+            // Recycle the old bitmap if it has changed.
+            if (rotatedBitmap != bitmap) {
+                it.recycle()
+            }
+            rotatedBitmap
         }
-        return rotatedBitmap
     }
 
     //IMPORTANT. If conversion not done ,the toBitmap conversion does not work on some devices.
@@ -288,37 +287,42 @@ class FaceAttandanceFragment :
     }
 
 
-    private fun toBitmap(image: Image): Bitmap? {
-        val nv21: ByteArray = YUV_420_888toNV21(image)
-        val yuvImage = YuvImage(nv21, ImageFormat.NV21, image.width, image.height, null)
-        val out = ByteArrayOutputStream()
-        yuvImage.compressToJpeg(Rect(0, 0, yuvImage.width, yuvImage.height), 75, out)
-        val imageBytes = out.toByteArray()
-        //System.out.println("bytes"+ Arrays.toString(imageBytes));
+    private fun toBitmap(image: Image?): Bitmap? {
+        return image?.let {
+            val nv21: ByteArray = YUV_420_888toNV21(it)
+            val yuvImage = YuvImage(nv21, ImageFormat.NV21, it.width, it.height, null)
+            val out = ByteArrayOutputStream()
+            yuvImage.compressToJpeg(Rect(0, 0, yuvImage.width, yuvImage.height), 75, out)
+            val imageBytes = out.toByteArray()
+            //System.out.println("bytes"+ Arrays.toString(imageBytes));
 
-        //System.out.println("FORMAT"+image.getFormat());
-        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+            //System.out.println("FORMAT"+image.getFormat());
+            BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+        }
     }
 
-    private fun getResizedBitmap(bm: Bitmap, newWidth: Int, newHeight: Int): Bitmap? {
-        val width = bm.width
-        val height = bm.height
-        val scaleWidth = newWidth.toFloat() / width
-        val scaleHeight = newHeight.toFloat() / height
-        // CREATE A MATRIX FOR THE MANIPULATION
-        val matrix = Matrix()
-        // RESIZE THE BIT MAP
-        matrix.postScale(scaleWidth, scaleHeight)
+    private fun getResizedBitmap(bm: Bitmap?, newWidth: Int, newHeight: Int): Bitmap? {
+        return bm?.let {
+            val width = it.width
+            val height = it.height
+            val scaleWidth = newWidth.toFloat() / width
+            val scaleHeight = newHeight.toFloat() / height
+            // CREATE A MATRIX FOR THE MANIPULATION
+            val matrix = Matrix()
+            // RESIZE THE BIT MAP
+            matrix.postScale(scaleWidth, scaleHeight)
 
-        // "RECREATE" THE NEW BITMAP
-        val resizedBitmap = Bitmap.createBitmap(
-            bm, 0, 0, width, height, matrix, false
-        )
-        bm.recycle()
-        return resizedBitmap
+            // "RECREATE" THE NEW BITMAP
+            val resizedBitmap = Bitmap.createBitmap(
+                it, 0, 0, width, height, matrix, false
+            )
+            it.recycle()
+            resizedBitmap
+        }
+
     }
 
-    fun recognizeImage(bitmap: Bitmap) {
+    private fun recognizeImage(bitmap: Bitmap) {
 
         // set Face to Preview
         viewBinding.facePreview.setImageBitmap(bitmap)
