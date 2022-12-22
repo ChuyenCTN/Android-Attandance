@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1030310122187",
+    "firebase_url": "https://hust-a0dad-default-rtdb.firebaseio.com",
+    "project_id": "hust-a0dad",
+    "storage_bucket": "hust-a0dad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030310122187:android:295b173a82950fec5c014e",
+        "android_client_info": {
+          "package_name": "com.hust.attandance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030310122187-u3aea4crc9jutqpcip9i4a3co1bgihvl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmXcdaiXxpcysAipr_6khvYoczKTNvVO0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030310122187-u3aea4crc9jutqpcip9i4a3co1bgihvl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

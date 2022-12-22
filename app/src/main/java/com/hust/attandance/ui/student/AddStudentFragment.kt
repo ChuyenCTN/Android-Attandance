@@ -21,10 +21,11 @@ class AddStudentFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolBar()
-        val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("message/string")
-
-        myRef.setValue(StudentResponse("20221","Nguyen Van A","bsdhbash", "0000732417", "Ha Noi","fdgskdn"))
+//        val database = FirebaseDatabase.getInstance()
+//        val myRef = database.getReference("message/string")
+//
+//        myRef.setValue(StudentResponse("20221","Nguyen Van A","bsdhbash", "0000732417", "Ha Noi","fdgskdn"))
+//
     }
 
     private fun initToolBar() {

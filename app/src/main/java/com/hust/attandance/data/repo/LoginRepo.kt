@@ -21,4 +21,12 @@ class LoginRepo(private val attandanceApi: AttandanceApi, private val cache: Cac
         cache.clearCache()
     }
 
+    fun saveListData(datas: List<LoginResonse>){
+        cache.saveLoginResponseList(datas)
+    }
+
+    fun getListData():List<LoginResonse>?{
+        return cache.getLoginResponseList()
+    }
+
 }

@@ -1,9 +1,6 @@
 package com.hust.attandance.di
 
-import com.hust.attandance.interact.CheckCurrentUserInteract
-import com.hust.attandance.interact.LoginInteract
-import com.hust.attandance.interact.LogoutInteract
-import com.hust.attandance.interact.ProfileInteract
+import com.hust.attandance.interact.*
 import org.koin.dsl.module
 
 @JvmField
@@ -13,5 +10,7 @@ val interactModule = module {
     single { ProfileInteract(get()) }
     single { CheckCurrentUserInteract(get()) }
     single { LogoutInteract(get()) }
+    single { GetClassInteract(get()) }
+    single { CreateClassInteract(get()) }
 
 }

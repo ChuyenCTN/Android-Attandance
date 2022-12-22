@@ -34,12 +34,12 @@ val viewModelModule: Module = module {
         SplashViewModel(get(), get())
     }
     viewModel {
-        DetailClassesViewModel(get())
+        DetailClassesViewModel(get(), get())
     }
     viewModel {
         FaceAttandanceViewModel(get())
     }
     viewModel {
-        AddStudentViewModel(get())
+        AddStudentViewModel(get(), get())
     }
 }

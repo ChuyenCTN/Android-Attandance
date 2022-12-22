@@ -10,6 +10,7 @@ class Cache(private val cacheSource: CacheSource) {
 
     companion object {
         const val LOGIN_RESPONSE = "login_response"
+        const val LOGIN_RESPONSE_LIST = "login_response_list"
 
     }
 
@@ -592,6 +593,17 @@ class Cache(private val cacheSource: CacheSource) {
             return null
         }
         val listType: Type = object : TypeToken<LoginResonse>() {}.type
+        return Gson().fromJson(data, listType)
+    }
+    fun saveLoginResponseList(response: List<LoginResonse>) =
+        cacheSource.putString(LOGIN_RESPONSE_LIST, Gson().toJson(response))
+
+    fun getLoginResponseList(): List<LoginResonse>? {
+        val data = cacheSource.getString(LOGIN_RESPONSE_LIST, "")
+        if (data.isEmpty()) {
+            return null
+        }
+        val listType: Type = object : TypeToken<List<LoginResonse>>() {}.type
         return Gson().fromJson(data, listType)
     }
 
