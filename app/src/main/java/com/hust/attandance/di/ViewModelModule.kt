@@ -7,6 +7,7 @@ import com.hust.attandance.ui.login.LoginViewModel
 import com.hust.attandance.ui.main.MainViewModel
 import com.hust.attandance.ui.profile.ProfileViewModel
 import com.hust.attandance.ui.splash.SplashViewModel
+import com.hust.attandance.ui.student.AddStudentViewModel
 import com.hust.attandance.ui.welcome.WelcomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
@@ -37,5 +38,8 @@ val viewModelModule: Module = module {
     }
     viewModel {
         FaceAttandanceViewModel(get())
+    }
+    viewModel {
+        AddStudentViewModel(get())
     }
 }

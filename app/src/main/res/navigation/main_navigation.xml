@@ -36,11 +36,40 @@
         app:popEnterAnim="@anim/default_pop_enter_anim"
         app:popExitAnim="@anim/default_pop_exit_anim"
         app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_to_attandance_fragment"
+        app:destination="@+id/attandance_fragment"
+        app:enterAnim="@anim/default_enter_anim"
+        app:exitAnim="@anim/default_exit_anim"
+        app:popEnterAnim="@anim/default_pop_enter_anim"
+        app:popExitAnim="@anim/default_pop_exit_anim"
+        app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_to_add_student_fragment"
+        app:destination="@+id/add_student"
+        app:enterAnim="@anim/default_enter_anim"
+        app:exitAnim="@anim/default_exit_anim"
+        app:popEnterAnim="@anim/default_pop_enter_anim"
+        app:popExitAnim="@anim/default_pop_exit_anim"
+        app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/class_detail"
         android:name="com.hust.attandance.ui.classes.DetailClassesFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_detail_classes" />
+
+    <fragment
+        android:id="@+id/attandance_fragment"
+        android:name="com.hust.attandance.ui.attandance.FaceAttandanceFragment"
+        android:label="@string/attandance_title"
+        tools:layout="@layout/fragment_detail_classes" />
+
+
+    <fragment
+        android:id="@+id/add_student"
+        android:name="com.hust.attandance.ui.student.AddStudentFragment"
+        android:label="@string/add_student_title"
+        tools:layout="@layout/fragment_add_student" />
 
 
 </navigation>

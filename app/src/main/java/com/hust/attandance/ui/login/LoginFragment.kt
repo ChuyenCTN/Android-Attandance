@@ -49,8 +49,10 @@ class LoginFragment : BaseViewBindingFragment<FragmentLoginBinding, LoginViewMod
                     showErrorSnackBar("Vui lòng nhập mật khẩu!")
                     return@setSafeOnClickListener
                 }
-                showProcessing()
-                viewModel.login()
+//                showProcessing()
+//                viewModel.login()
+
+                findNavController().safeNavigate(AppNavigationDirections.actionToMain())
             }
         }
         observeData()

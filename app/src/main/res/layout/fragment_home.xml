@@ -54,7 +54,7 @@
         android:layout_marginHorizontal="@dimen/keyline_4"
         android:layout_marginVertical="@dimen/keyline_4"
         android:background="@drawable/bg_login"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

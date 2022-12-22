@@ -17,7 +17,6 @@ import androidx.lifecycle.LifecycleOwner
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Task
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.Face
@@ -50,21 +49,25 @@ class FaceAttandanceFragment :
     var cam_face = CameraSelector.LENS_FACING_BACK //Default Back Camera
     var detector: FaceDetector? = null
     var inputSize = 112 //Input size for model
-    var intValues: IntArray
+    lateinit var intValues: IntArray
     var isModelQuantized = false
     var distance = 1.0f
-    var IMAGE_MEAN = 128.0f
-    var IMAGE_STD = 128.0f
-    var OUTPUT_SIZE = 192 //Output size of model
-    var embeedings: Array<FloatArray>
+    private var IMAGE_MEAN = 128.0f
+    private var IMAGE_STD = 128.0f
+    private var OUTPUT_SIZE = 192 //Output size of model
+    lateinit var embeedings: Array<FloatArray>
     var tfLite: Interpreter? = null
-    private val registered: java.util.HashMap<String, SimilarityClassifier.Recognition> =
-        java.util.HashMap<String, SimilarityClassifier.Recognition>() //saved Faces
+    var start = true
+    var flipX = false
+
+
+    private val registered: HashMap<String, SimilarityClassifier.Recognition> =
+        HashMap<String, SimilarityClassifier.Recognition>() //saved Faces
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        cameraBind()
     }
 
 
@@ -84,6 +87,7 @@ class FaceAttandanceFragment :
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
+    @SuppressLint("UnsafeOptInUsageError")
     fun bindPreview(cameraProvider: ProcessCameraProvider) {
         val preview = Preview.Builder()
             .build()
@@ -113,69 +117,74 @@ class FaceAttandanceFragment :
 //                System.out.println("ANALYSIS");
 
             //Process acquired image to detect faces
-            val result: Task<List<Face>> =
-                detector?.process(image)
-                    ?.addOnSuccessListener(
-                        OnSuccessListener<List<Face>> { faces ->
-                            if (faces.size != 0) {
-                                val face = faces[0] //Get first face from detected faces
-                                //                                                    System.out.println(face);
+            val result: com.google.android.gms.tasks.Task<List<Face>>? =
+                image?.let {
+                    detector?.process(it)
+                        ?.addOnSuccessListener(
+                            OnSuccessListener<List<Face>> { faces ->
+                                if (faces.size != 0) {
+                                    val face = faces[0] //Get first face from detected faces
+                                    //                                                    System.out.println(face);
 
-                                //mediaImage to Bitmap
-                                val frame_bmp = toBitmap(mediaImage)
-                                val rot = imageProxy.imageInfo.rotationDegrees
+                                    //mediaImage to Bitmap
+                                    val frame_bmp = toBitmap(mediaImage)
+                                    val rot = imageProxy.imageInfo.rotationDegrees
 
-                                //Adjust orientation of Face
-                                val frame_bmp1 =
-                                    rotateBitmap(
-                                        frame_bmp,
-                                        rot,
-                                        false,
-                                        false
+                                    //Adjust orientation of Face
+                                    val frame_bmp1 =
+                                        rotateBitmap(
+                                            frame_bmp,
+                                            rot,
+                                            false,
+                                            false
+                                        )
+
+
+                                    //Get bounding box of face
+                                    val boundingBox = RectF(face.boundingBox)
+
+                                    //Crop out bounding box from whole Bitmap(image)
+                                    var cropped_face =
+                                        getCropBitmapByCPU(
+                                            frame_bmp1,
+                                            boundingBox
+                                        )
+                                    if (flipX) cropped_face =
+                                        rotateBitmap(
+                                            cropped_face,
+                                            0,
+                                            flipX,
+                                            false
+                                        )
+                                    //Scale the acquired Face to 112*112 which is required input for model
+                                    val scaled = getResizedBitmap(cropped_face, 112, 112)
+                                    if (start) recognizeImage(scaled) //Send scaled bitmap to create face embeddings.
+                                    //                                                    System.out.println(boundingBox);
+                                } else {
+                                    Log.d(
+                                        "zxcvbnm,",
+                                        "${if (registered.isEmpty()) "Add face" else "No Face Detected!"}"
                                     )
-
-
-                                //Get bounding box of face
-                                val boundingBox = RectF(face.boundingBox)
-
-                                //Crop out bounding box from whole Bitmap(image)
-                                var cropped_face =
-                                    getCropBitmapByCPU(
-                                        frame_bmp1,
-                                        boundingBox
-                                    )
-                                if (flipX) cropped_face =
-                                    rotateBitmap(
-                                        cropped_face,
-                                        0,
-                                        flipX,
-                                        false
-                                    )
-                                //Scale the acquired Face to 112*112 which is required input for model
-                                val scaled = getResizedBitmap(cropped_face, 112, 112)
-                                if (start) recognizeImage(scaled) //Send scaled bitmap to create face embeddings.
-                                //                                                    System.out.println(boundingBox);
-                            } else {
-                                if (registered.isEmpty()) reco_name.setText("Add Face") else reco_name.setText(
-                                    "No Face Detected!"
-                                )
-                            }
+                                }
+                            })
+                        ?.addOnFailureListener(
+                            OnFailureListener {
+                                // Task failed with an exception
+                                // ...
+                            })?.addOnCompleteListener(OnCompleteListener<List<Face?>?> {
+                            imageProxy.close() //v.important to acquire next frame for analysis
                         })
-                    .addOnFailureListener(
-                        OnFailureListener {
-                            // Task failed with an exception
-                            // ...
-                        })
-                    .addOnCompleteListener(OnCompleteListener<List<Face?>?> {
-                        imageProxy.close() //v.important to acquire next frame for analysis
-                    })
+                }
         }
-        cameraProvider.bindToLifecycle(
-            (this as LifecycleOwner),
-            cameraSelector,
-            imageAnalysis,
-            preview
-        )
+        cameraSelector?.let {
+            cameraProvider.bindToLifecycle(
+                (this as LifecycleOwner),
+                it,
+                imageAnalysis,
+                preview
+            )
+        }
+
     }
 
     private fun getCropBitmapByCPU(source: Bitmap?, cropRectF: RectF): Bitmap? {
@@ -322,7 +331,7 @@ class FaceAttandanceFragment :
 
     }
 
-    private fun recognizeImage(bitmap: Bitmap) {
+    private fun recognizeImage(bitmap: Bitmap?) {
 
         // set Face to Preview
         viewBinding.facePreview.setImageBitmap(bitmap)
@@ -333,7 +342,7 @@ class FaceAttandanceFragment :
         intValues = IntArray(inputSize * inputSize)
 
         //get pixel values from Bitmap to normalize
-        bitmap.getPixels(intValues, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
+        bitmap?.getPixels(intValues, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
         imgData.rewind()
         for (i in 0 until inputSize) {
             for (j in 0 until inputSize) {

@@ -24,4 +24,6 @@
     <string name="title_splash">Splash</string>
     <string name="error_unknow">Có lỗi xảy ra. Vui lòng thử lại.</string>
     <string name="error_common_error_title">Thông báo</string>
+    <string name="attandance_title">Điểm danh</string>
+    <string name="add_student_title">Thêm mới sinh viên</string>
 </resources>
