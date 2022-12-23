@@ -1,9 +1,12 @@
 package com.hust.attandance.ui.attandance
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.graphics.*
 import android.media.Image
-import android.os.Bundle
+import android.os.*
 import android.util.Log
 import android.util.Pair
 import android.util.Size
@@ -12,24 +15,50 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.common.util.concurrent.ListenableFuture
+import com.google.gson.Gson
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.Face
+import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetector
+import com.google.mlkit.vision.face.FaceDetectorOptions
+import com.hust.attandance.R
 import com.hust.attandance.databinding.FragmentFaceAttandanceBinding
 import com.hust.attandance.ui.common.BaseViewBindingFragment
+import com.hust.attandance.ui.schedule.StudentsDetectAdapter
+import com.hust.attandance.utils.Constants
+import com.hust.attandance.utils.exceptions.hasPermissions
+import com.hust.attandance.utils.extensions.safeNavigateUp
+import com.hust.attandance.utils.extensions.setSafeOnClickListener
+import com.hust.attandance.utils.extensions.toggleVisibility
+import com.hust.attandance.utils.helpers.UIUtils
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.android.synthetic.main.fragment_face_attandance.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.tensorflow.lite.Interpreter
 import java.io.ByteArrayOutputStream
+import java.io.FileInputStream
+import java.io.IOException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import java.nio.MappedByteBuffer
 import java.nio.ReadOnlyBufferException
+import java.nio.channels.FileChannel
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -42,6 +71,8 @@ class FaceAttandanceFragment :
     override val viewModel by viewModel<FaceAttandanceViewModel>()
 
     private var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>? = null
+
+    private val args by navArgs<FaceAttandanceFragmentArgs>()
 
     private val SELECT_PICTURE = 1
     var cameraProvider: ProcessCameraProvider? = null
@@ -60,6 +91,8 @@ class FaceAttandanceFragment :
     var start = true
     var flipX = false
 
+    var modelFile = "mobile_face_net.tflite" //model name
+
 
     private val registered: HashMap<String, SimilarityClassifier.Recognition> =
         HashMap<String, SimilarityClassifier.Recognition>() //saved Faces
@@ -67,7 +100,23 @@ class FaceAttandanceFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        cameraBind()
+        initView()
+        //Load model
+        try {
+            tfLite = loadModelFile(requireActivity(), modelFile)?.let { Interpreter(it) }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        //Initialize Face Detector
+        val highAccuracyOpts = FaceDetectorOptions.Builder()
+            .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
+            .build()
+        detector = FaceDetection.getClient(highAccuracyOpts)
+        checkPermission() {
+            cameraBind()
+        }
+
     }
 
 
@@ -160,6 +209,7 @@ class FaceAttandanceFragment :
                                     val scaled = getResizedBitmap(cropped_face, 112, 112)
                                     if (start) recognizeImage(scaled) //Send scaled bitmap to create face embeddings.
                                     //                                                    System.out.println(boundingBox);
+                                    Log.d("qazxcv,", faces.toString())
                                 } else {
                                     Log.d(
                                         "zxcvbnm,",
@@ -333,8 +383,10 @@ class FaceAttandanceFragment :
 
     private fun recognizeImage(bitmap: Bitmap?) {
 
-        // set Face to Preview
-        viewBinding.facePreview.setImageBitmap(bitmap)
+        try {// set Face to Preview
+            viewBinding.facePreview.setImageBitmap(bitmap)
+        } catch (e: Exception) {
+        }
 
         //Create ByteBuffer to store normalized image
         val imgData = ByteBuffer.allocateDirect(1 * inputSize * inputSize * 3 * 4)
@@ -366,9 +418,25 @@ class FaceAttandanceFragment :
             Array(1) { FloatArray(OUTPUT_SIZE) } //output of model will be stored in this variable
         outputMap[0] = embeedings
         tfLite?.runForMultipleInputsOutputs(inputArray, outputMap) //Run model
+
         var distance_local = Float.MAX_VALUE
         val id = "0"
         val label = "?"
+
+
+        if (!args.isAttandance) {
+            val nearest: List<Pair<String?, Float?>?> =
+                myFindNearest(
+                    embeedings[0],
+                    viewModel.registeredList
+                ) //Find 2 closest matching face
+            if (nearest[0] != null) {
+                distance_local = nearest[0]!!.second!!
+                if (distance_local < distance)
+                    viewModel.checkStudentAttan(nearest[0]!!.first!!)
+            }
+        }
+
 
         //Compare new face with saved Faces.
         if (registered.size > 0) {
@@ -401,7 +469,8 @@ class FaceAttandanceFragment :
 ////                    System.out.println("nearest: " + name + " - distance: " + distance_local);
 //                } else {
                 //If distance between Closest found face is more than 1.000 ,then output UNKNOWN face.
-                Log.d("zxcvbnm,", "${if (distance_local < distance) name else "unknown"}")
+
+                Log.d("zxcvbnm,", "${if (distance_local < distance) "name" else "unknown"}")
 
 
             }
@@ -416,10 +485,10 @@ class FaceAttandanceFragment :
         var prev_ret: Pair<String?, Float?>? = null //to get second closest match
 
         for ((name, value) in registered) {
-            val knownEmb = (value.getExtra() as Array<FloatArray>)[0]
+            val knownEmb = (value.getExtra() as Array<ArrayList<Any>>)[0]
             var distance = 0f
             for (i in emb.indices) {
-                val diff = emb[i] - knownEmb[i]
+                val diff = emb[i] - knownEmb[i] as Float
                 distance += diff * diff
             }
             distance = Math.sqrt(distance.toDouble()).toFloat()
@@ -435,4 +504,184 @@ class FaceAttandanceFragment :
         return neighbour_list
     }
 
+
+    private fun myFindNearest(
+        emb: FloatArray,
+        inputList: List<Pair<String, SimilarityClassifier.Recognition>>
+    ): MutableList<Pair<String?, Float?>?> {
+        val neighbour_list: MutableList<Pair<String?, Float?>?> = ArrayList()
+        var ret: Pair<String?, Float?>? = null //to get closest match
+        var prev_ret: Pair<String?, Float?>? = null //to get second closest match
+
+        for (input in inputList) {
+            val knownEmb = (input.second.extra as ArrayList<ArrayList<Any>>)[0]
+            var distance = 0f
+            for (i in emb.indices) {
+                val diff = emb[i] - (knownEmb[i] as Double).toFloat()
+                distance += diff * diff
+            }
+            distance = Math.sqrt(distance.toDouble()).toFloat()
+            if (ret == null || distance < (ret.second ?: 0F)) {
+                prev_ret = ret
+                ret = Pair(input.first, distance)
+            }
+        }
+
+        if (prev_ret == null) prev_ret = ret
+        neighbour_list.add(ret)
+        neighbour_list.add(prev_ret)
+        return neighbour_list
+    }
+
+    @Throws(IOException::class)
+    private fun loadModelFile(activity: Activity, MODEL_FILE: String): MappedByteBuffer? {
+        val fileDescriptor = activity.assets.openFd(MODEL_FILE)
+        val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
+        val fileChannel = inputStream.channel
+        val startOffset = fileDescriptor.startOffset
+        val declaredLength = fileDescriptor.declaredLength
+        return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
+    }
+
+    private fun initView() {
+        viewBinding.apply {
+
+            tvTitle.text = if (!args.isAttandance) "Điểm danh" else "Nhận diện khuôn mặt"
+            lButtonSave.toggleVisibility(args.isAttandance)
+            lBottomSheet.toggleVisibility(!args.isAttandance)
+            if (!args.isAttandance) initBottomSheet()
+            btnBack.setSafeOnClickListener {
+                findNavController().safeNavigateUp()
+            }
+            btnFlipCamera.setSafeOnClickListener {
+                if (cam_face == CameraSelector.LENS_FACING_BACK) {
+                    cam_face = CameraSelector.LENS_FACING_FRONT
+                    flipX = true
+                } else {
+                    cam_face = CameraSelector.LENS_FACING_BACK
+                    flipX = false
+                }
+                cameraProvider?.unbindAll()
+                cameraBind()
+            }
+
+            btnSave.setSafeOnClickListener {
+                try {//Create and Initialize new object with Face embeddings and Name.
+                    if (this@FaceAttandanceFragment::embeedings.isInitialized) {
+                        val result = SimilarityClassifier.Recognition(
+                            "0", "", -1f
+                        )
+                        result.extra = embeedings
+
+                        setFragmentResult(
+                            Constants.FACE_ID_KEY,
+                            bundleOf(Constants.FACE_ID_DATA to Gson().toJson(result))
+                        )
+
+                        Log.d("qazxcvbn", "$result")
+                        Log.d("qazxcvbn", "$embeedings")
+                        findNavController().safeNavigateUp()
+                    }
+                } catch (e: Exception) {
+                }
+            }
+
+            btnNavToCart.setSafeOnClickListener {
+                showProcessing()
+                viewModel.saveAttandance()
+            }
+        }
+        with(viewModel) {
+            viewModel.students.observe(viewLifecycleOwner) {
+                if (it != null && !args.isAttandance) {
+                    productAdapter.setData(it)
+                    productAdapter.notifyDataSetChanged()
+                }
+            }
+
+            viewModel.createSchedule.observe(viewLifecycleOwner) {
+                hideProcessing()
+                findNavController().safeNavigateUp()
+            }
+        }
+    }
+
+
+    private fun startVibrate() {
+        val vib = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager =
+                requireActivity().getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            vibratorManager.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            requireActivity().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        }
+        val vibrationEffect1: VibrationEffect
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrationEffect1 = VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
+            vib.cancel()
+            vib.vibrate(vibrationEffect1)
+        } else vib.vibrate(100)
+    }
+
+
+    private fun checkPermission(onGranted: () -> Unit) {
+        when {
+            requireContext().hasPermissions(
+                arrayOf(
+                    Manifest.permission.CAMERA
+                )
+            ) -> {
+                onGranted.invoke()
+            }
+            else -> {
+                showDialogCamera {
+                    Dexter.withContext(requireActivity()).withPermission(Manifest.permission.CAMERA)
+                        .withListener(object : PermissionListener {
+                            override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
+                                onGranted.invoke()
+                            }
+
+                            override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
+                                findNavController().safeNavigateUp()
+                            }
+
+                            override fun onPermissionRationaleShouldBeShown(
+                                p0: com.karumi.dexter.listener.PermissionRequest?,
+                                p1: PermissionToken?
+                            ) {
+
+                            }
+
+                        }).check()
+                }
+            }
+        }
+    }
+
+    private fun showDialogCamera(onPositive: () -> Unit) {
+        UIUtils.buildAlertDialog(requireContext(),
+            title = "Yêu cầu quyền truy cập camera",
+            message = "Để sử dụng tính năng này, bạn cần cấp quyền truy cập camera cho ứng dụng. Bạn có muốn thực hiện cấp quyền?",
+            positiveText = getString(R.string.label_ok_popup),
+            onPositiveClick = { p0, p1 -> onPositive.invoke() },
+            negativeText = getString(R.string.confirm_cancel),
+            onNegativeClick = { p0, p1 -> findNavController().safeNavigateUp() }).apply {
+            show()
+            UIUtils.fixDialogStyle(this)
+        }
+    }
+
+    private lateinit var productAdapter: StudentsDetectAdapter
+    private fun initBottomSheet() {
+
+        productAdapter = StudentsDetectAdapter() {}
+        viewBinding.rvProductList.apply {
+            adapter = productAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+        viewModel.getStudents()
+
+
+    }
 }

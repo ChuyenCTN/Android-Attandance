@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.hust.attandance.AppNavigationDirections
 import com.hust.attandance.MainNavigationDirections
 import com.hust.attandance.databinding.FragmentHomeBinding
@@ -29,7 +30,7 @@ class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding, HomeViewModel>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         classesAdapter = HomeClassesAdapter {
-
+            findNavController().safeNavigate(MainNavigationDirections.actionToClassDetail(Gson().toJson(it)))
         }
         viewBinding.apply {
             rcvClass.apply {
@@ -37,8 +38,15 @@ class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding, HomeViewModel>
                 layoutManager = LinearLayoutManager(requireContext())
             }
 
-            tvTitle.setSafeOnClickListener {
-                findNavController().safeNavigate(MainNavigationDirections.actionToClassDetail())
+        }
+
+        with(viewModel) {
+            getData()
+            classes.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    classesAdapter.setData(it)
+                    classesAdapter.notifyDataSetChanged()
+                }
             }
         }
     }

@@ -170,4 +170,6 @@ object Constants {
      */
     const val QUALIFIER_REALM_CONFIGURATION_RMM = "qualifier_rmmigration"
     const val QUALIFIER_REALM_CONFIGURATION_NEED_DELETE = "qualifier_need_delete"
+    const val FACE_ID_DATA = "FACE_ID_DATA"
+    const val FACE_ID_KEY = "FACE_ID_KEY"
 }

@@ -2,6 +2,8 @@ package com.hust.attandance.ui.classes
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.hust.attandance.ui.schedule.SchedulesFragment
+import com.hust.attandance.ui.student.StudentsFragment
 
 class DetailClassManagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 

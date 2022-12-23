@@ -20,7 +20,7 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BASE_DOMAIN_URL", '"https://project-for-ai.herokuapp.com"')
+        buildConfigField("String", "BASE_DOMAIN_URL", '"https://project-ai-v1.herokuapp.com"')
     }
 
     buildTypes {
@@ -132,4 +132,5 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly-SNAPSHOT'
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation 'com.karumi:dexter:6.2.3'
 }

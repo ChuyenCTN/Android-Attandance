@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/dp_12"
+    android:paddingTop="@dimen/dp_16">
+
+    <ImageView
+        android:id="@+id/imgAvatarClass"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:src="@drawable/img_student"
+        app:layout_constraintBottom_toBottomOf="@+id/tvName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvCode" />
+
+    <ImageView
+        android:id="@+id/btnChecked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_12"
+        android:src="@drawable/ic_baseline_check_circle_24"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgAvatarClass"
+        app:tint="@color/primary_dark" />
+
+    <TextView
+        android:id="@+id/tvCode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/quicksand_semibold"
+        android:gravity="start"
+        android:maxLines="2"
+        android:paddingHorizontal="@dimen/dp_12"
+        android:textColor="@color/reply_black_800"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintEnd_toStartOf="@+id/btnChecked"
+        app:layout_constraintStart_toEndOf="@+id/imgAvatarClass"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Văn bằng 2" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/quicksand_semibold"
+        android:gravity="start"
+        android:maxLines="2"
+        android:paddingHorizontal="@dimen/dp_12"
+        android:textColor="@color/gray_86"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintEnd_toStartOf="@+id/btnChecked"
+        app:layout_constraintStart_toEndOf="@+id/imgAvatarClass"
+        app:layout_constraintTop_toBottomOf="@+id/tvCode"
+        tools:text="Văn bằng 2" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

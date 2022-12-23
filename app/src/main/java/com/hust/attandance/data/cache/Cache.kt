@@ -1,7 +1,11 @@
 package net.citigo.kiotviet.pos.fb.data.cache
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.hust.attandance.data.model.ClassResponse
+import com.hust.attandance.data.model.ScheduleResponse
+import com.hust.attandance.data.model.StudentResponse
 import com.hust.attandance.data.response.LoginResonse
 import java.lang.reflect.Type
 
@@ -11,6 +15,9 @@ class Cache(private val cacheSource: CacheSource) {
     companion object {
         const val LOGIN_RESPONSE = "login_response"
         const val LOGIN_RESPONSE_LIST = "login_response_list"
+        const val STUDENT_RESPONSE_LIST = "student_response_list"
+        const val SCHEDULE_RESPONSE_LIST = "schedule_response_list"
+        const val CLASS_RESPONSE_LIST = "class_response_list"
 
     }
 
@@ -427,6 +434,10 @@ class Cache(private val cacheSource: CacheSource) {
 //
     fun clearCache() {
         cacheSource.remove(LOGIN_RESPONSE)
+        cacheSource.remove(LOGIN_RESPONSE_LIST)
+        cacheSource.remove(STUDENT_RESPONSE_LIST)
+        cacheSource.remove(SCHEDULE_RESPONSE_LIST)
+        cacheSource.remove(CLASS_RESPONSE_LIST)
     }
 
     //
@@ -595,6 +606,7 @@ class Cache(private val cacheSource: CacheSource) {
         val listType: Type = object : TypeToken<LoginResonse>() {}.type
         return Gson().fromJson(data, listType)
     }
+
     fun saveLoginResponseList(response: List<LoginResonse>) =
         cacheSource.putString(LOGIN_RESPONSE_LIST, Gson().toJson(response))
 
@@ -605,6 +617,101 @@ class Cache(private val cacheSource: CacheSource) {
         }
         val listType: Type = object : TypeToken<List<LoginResonse>>() {}.type
         return Gson().fromJson(data, listType)
+    }
+
+    fun insertStudent(student: StudentResponse) {
+        val data = cacheSource.getString(STUDENT_RESPONSE_LIST, "")
+        val listType: Type = object : TypeToken<List<StudentResponse>>() {}.type
+        if (data.isEmpty()) {
+            cacheSource.putString(STUDENT_RESPONSE_LIST, Gson().toJson(mutableListOf(student)))
+        } else {
+            val list = getStudentList()
+            list?.let {
+                val data = it.toMutableList().apply { add(student) }
+                cacheSource.putString(
+                    STUDENT_RESPONSE_LIST,
+                    Gson().toJson(data)
+                )
+            }
+
+        }
+    }
+
+    fun getStudentList(): List<StudentResponse>? {
+        val data = cacheSource.getString(STUDENT_RESPONSE_LIST, "")
+
+        if (data.isEmpty()) {
+            return null
+        }
+        val listType: Type = object : TypeToken<List<StudentResponse>>() {}.type
+        val list: List<StudentResponse>? = Gson().fromJson(data, listType)
+        return list
+    }
+
+    fun insertSchedule(schedule: ScheduleResponse) {
+        val data = cacheSource.getString(SCHEDULE_RESPONSE_LIST, "")
+        val listType: Type = object : TypeToken<List<ScheduleResponse>>() {}.type
+        if (data.isEmpty()) {
+            cacheSource.putString(SCHEDULE_RESPONSE_LIST, Gson().toJson(mutableListOf(schedule)))
+        } else {
+            val list = getScheduleList()
+            list?.let {
+                val data = it.toMutableList().apply { add(schedule) }
+                cacheSource.putString(
+                    SCHEDULE_RESPONSE_LIST,
+                    Gson().toJson(data)
+                )
+            }
+
+        }
+    }
+
+    fun getScheduleList(): List<ScheduleResponse>? {
+        val data = cacheSource.getString(SCHEDULE_RESPONSE_LIST, "")
+
+        if (data.isEmpty()) {
+            return null
+        }
+        val listType: Type = object : TypeToken<List<ScheduleResponse>>() {}.type
+        val list: List<ScheduleResponse>? = Gson().fromJson(data, listType)
+        return list
+    }
+
+//    fun insertSchedule(schedule: ScheduleResponse) {
+//        val data = cacheSource.getString(SCHEDULE_RESPONSE_LIST, "")
+//        val listType: Type = object : TypeToken<List<ScheduleResponse>>() {}.type
+//        if (data.isEmpty()) {
+//            cacheSource.putString(SCHEDULE_RESPONSE_LIST, Gson().toJson(mutableListOf(schedule)))
+//        } else {
+//            val list = getScheduleList()
+//            list?.let {
+//                val data = it.toMutableList().apply { add(schedule) }
+//                cacheSource.putString(
+//                    SCHEDULE_RESPONSE_LIST,
+//                    Gson().toJson(data)
+//                )
+//            }
+//
+//        }
+//    }
+
+    fun getClassesList(): List<ClassResponse>? {
+        val data = cacheSource.getString(CLASS_RESPONSE_LIST, "")
+
+        if (data.isEmpty()) {
+            return listOf(
+                ClassResponse(
+                    "123",
+                    "Nhập môn trí tuệ nhân tạo",
+                    "K66 - Viện đào tạo liên tục, Đại học bách khoa, Lê Thanh Nghị",
+                    "Phạm Văn Hải",
+                    getStudentList()?.map { it.code } ?: listOf()
+                )
+            )
+        }
+        val listType: Type = object : TypeToken<List<ClassResponse>>() {}.type
+        val list: List<ClassResponse>? = Gson().fromJson(data, listType)
+        return list
     }
 
 

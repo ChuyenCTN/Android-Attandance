@@ -6,8 +6,10 @@ import com.hust.attandance.ui.home.HomeViewModel
 import com.hust.attandance.ui.login.LoginViewModel
 import com.hust.attandance.ui.main.MainViewModel
 import com.hust.attandance.ui.profile.ProfileViewModel
+import com.hust.attandance.ui.schedule.ScheduleViewModel
 import com.hust.attandance.ui.splash.SplashViewModel
 import com.hust.attandance.ui.student.AddStudentViewModel
+import com.hust.attandance.ui.student.StudentViewModel
 import com.hust.attandance.ui.welcome.WelcomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
@@ -16,7 +18,7 @@ import org.koin.dsl.module
 @JvmField
 val viewModelModule: Module = module {
     viewModel {
-        HomeViewModel(get())
+        HomeViewModel(get(), get())
     }
     viewModel {
         WelcomeViewModel(get(), get())
@@ -34,12 +36,18 @@ val viewModelModule: Module = module {
         SplashViewModel(get(), get())
     }
     viewModel {
-        DetailClassesViewModel(get(), get())
+        DetailClassesViewModel(get(), get(), get())
     }
     viewModel {
-        FaceAttandanceViewModel(get())
+        ScheduleViewModel(get(), get())
+    }
+    viewModel {
+        FaceAttandanceViewModel(get(), get(), get())
     }
     viewModel {
         AddStudentViewModel(get(), get())
+    }
+    viewModel {
+        StudentViewModel(get(), get())
     }
 }

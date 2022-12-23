@@ -12,5 +12,10 @@ val interactModule = module {
     single { LogoutInteract(get()) }
     single { GetClassInteract(get()) }
     single { CreateClassInteract(get()) }
+    single { CreateStudentInteract(get()) }
+    single { GetStudentsInteract(get()) }
+    single { GetSchedulesInteract(get()) }
+    single { CreateScheduleInteract(get()) }
+    single { GetClassesInteract(get()) }
 
 }

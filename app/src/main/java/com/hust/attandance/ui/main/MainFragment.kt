@@ -37,11 +37,8 @@ class MainFragment : BaseViewBindingFragment<FragmentMainBinding, MainViewModel>
                 R.id.nav_home -> {
                     0
                 }
-                R.id.nav_schedule -> {
-                    1
-                }
                 R.id.nav_profile -> {
-                    2
+                    1
                 }
                 else -> 0
             }.let {

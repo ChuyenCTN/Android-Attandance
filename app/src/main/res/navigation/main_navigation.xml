@@ -56,13 +56,21 @@
         android:id="@+id/class_detail"
         android:name="com.hust.attandance.ui.classes.DetailClassesFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_detail_classes" />
+        tools:layout="@layout/fragment_detail_classes">
+        <argument
+            android:name="itemDetail"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/attandance_fragment"
         android:name="com.hust.attandance.ui.attandance.FaceAttandanceFragment"
         android:label="@string/attandance_title"
-        tools:layout="@layout/fragment_detail_classes" />
+        tools:layout="@layout/fragment_detail_classes">
+        <argument
+            android:name="isAttandance"
+            app:argType="boolean" />
+    </fragment>
 
 
     <fragment

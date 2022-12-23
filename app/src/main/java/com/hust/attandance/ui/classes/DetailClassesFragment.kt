@@ -3,9 +3,11 @@ package com.hust.attandance.ui.classes
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.hust.attandance.databinding.FragmentDetailClassesBinding
+import com.hust.attandance.ui.attandance.FaceAttandanceFragmentArgs
 import com.hust.attandance.ui.common.BaseViewBindingFragment
 import com.hust.attandance.ui.main.MainFragmentDirections
 import com.hust.attandance.utils.extensions.safeNavigate
@@ -21,6 +23,8 @@ class DetailClassesFragment :
     ) {
     override val viewModel by sharedViewModel<DetailClassesViewModel>()
 
+    private val args by navArgs<DetailClassesFragmentArgs>()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewBinding.apply {
@@ -31,7 +35,7 @@ class DetailClassesFragment :
                 val tab = tabClass.newTab()
                 val title = when (position) {
                     DetailClassManagerAdapter.STUDENT_TAB_INDEX -> "Sinh viên"
-                    else -> "Lịch học"
+                    else -> "Điểm danh"
                 }
                 tab.customView = tabClass.inflateTabView(title)
                 tabClass.addTab(tab, false)
@@ -43,9 +47,14 @@ class DetailClassesFragment :
             }
 
             btnAttandance.setSafeOnClickListener {
-                findNavController().safeNavigate(MainFragmentDirections.actionToAttandanceFragment())
+                findNavController().safeNavigate(
+                    MainFragmentDirections.actionToAttandanceFragment(
+                        false
+                    )
+                )
             }
         }
+        initView()
     }
 
     private val onTabSelected = object : TabLayout.OnTabSelectedListener {
@@ -68,7 +77,6 @@ class DetailClassesFragment :
         override fun onPageSelected(position: Int) {
             Timber.d("onPageSelected: $position")
             super.onPageSelected(position)
-            btnAttandance.text = if (position == 0) "Thêm sinh viên" else "Thêm lịch học"
             viewBinding.tabClass.selectTab(
                 viewBinding.tabClass.getTabAt(position), true
 
@@ -90,6 +98,22 @@ class DetailClassesFragment :
     override fun onStop() {
         super.onStop()
         viewBinding.pagerClass.unregisterOnPageChangeCallback(onPageChanged)
+    }
+
+    private fun initView() {
+        with(viewModel) {
+            viewBinding.apply {
+                getDetail(args.itemDetail)
+                getStudents()
+                classDetail.observe(viewLifecycleOwner) {
+                    tvName.text = it.name
+                    tvDescription.text = "Giáo viên: ${it.mainTeacher}"
+                    tvMainTeacher.text = it.description
+                    tvNumberStudent.text = "Sinh viên: ${studentList.size}"
+                }
+            }
+
+        }
     }
 
 }

@@ -9,7 +9,7 @@ class ClassesViewHolder(
     val viewBinding: ItemClassesBinding, onClick: (item: ClassResponse) -> Unit
 ) : BaseRecyclerViewAdapter.BaseViewHolder<ClassResponse>(viewBinding) {
     init {
-        viewBinding.root.setSafeOnClickListener {
+        viewBinding.btnMore.setSafeOnClickListener {
             item?.let {
                 onClick.invoke(it)
             }
@@ -20,7 +20,7 @@ class ClassesViewHolder(
         viewBinding.apply {
             tvTitle.text = item.name ?: ""
             tvDescription.text = item.description ?: ""
-            tvCountNumber.text = "Sĩ số: ${item.studentIds.size}"
+            tvCountNumber.text = "${item.studentIds.size} sinh viên"
         }
     }
 
